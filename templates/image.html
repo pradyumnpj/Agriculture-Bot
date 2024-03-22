@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Upload crop Image</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    />
+    <style>
+      body {
+        background-color: #f8f9fa;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin-top: 50px;
+      }
+      .page-title {
+        text-align: center;
+        color: #007bff;
+        margin-bottom: 20px;
+      }
+      .page-description {
+        text-align: center;
+        color: #6c757d;
+        margin-bottom: 30px;
+      }
+      .form-container {
+        text-align: center;
+      }
+      .form-group {
+        margin-bottom: 20px;
+      }
+      .file-input {
+        display: none;
+      }
+      .custom-file-upload {
+        border: 1px solid #007bff;
+        color: #007bff;
+        background-color: transparent;
+        border-radius: 5px;
+        padding: 10px 20px;
+        cursor: pointer;
+        transition: background-color 0.3s, color 0.3s;
+      }
+      .custom-file-upload:hover {
+        background-color: #007bff;
+        color: #fff;
+      }
+      .btn-build {
+        background-color: #007bff;
+        color: #fff;
+        border-radius: 5px;
+        padding: 10px 20px;
+        cursor: pointer;
+        transition: background-color 0.3s, color 0.3s;
+      }
+      .btn-build:hover {
+        background-color: #0056b3;
+      }
+      .result-container {
+        margin-top: 50px;
+        border-top: 1px solid #ced4da;
+        padding-top: 30px;
+      }
+      .result-image img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      .result-text {
+        padding-left: 20px;
+      }
+    </style>
+  </head>
+
+
+  
+  <body>
+    <div class="container">
+      <h1 class="page-title">Upload Crop Image</h1>
+      <p class="page-description">
+        Ask your query to our bot by just uploading your crop image.
+      </p>
+      <form
+        action="/upload"
+        method="post"
+        enctype="multipart/form-data"
+        class="form-container"
+      >
+        <div class="form-group">
+          <label for="file-upload" class="custom-file-upload"
+            >Choose Image</label
+          >
+          <input
+            type="file"
+            id="file-upload"
+            name="file"
+            multiple
+            accept=".jpg,.jpeg,.png"
+            class="file-input"
+          />
+        </div>
+        <button type="submit" class="btn btn-build btn-lg btn-block">
+          Build
+        </button>
+      </form>
+          </div>
+  </body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Agriculture-Bot</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    />
+    <style>
+      .chat-container {
+        height: 80vh;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        overflow-y: auto;
+        padding: 10px;
+        margin-bottom: 15px;
+      }
+
+      .chat-message {
+        width: 70%;
+        margin-bottom: 10px;
+        padding: 10px;
+        border-radius: 5px;
+      }
+
+      .chat-message.user {
+        margin-left: auto;
+        background-color: #e0f7fe;
+      }
+
+      .chat-message.assistant {
+        margin-right: auto;
+        background-color: #f0f0f0;
+      }
+
+      .chat-input {
+        display: flex;
+      }
+
+      .chat-input input {
+        flex-grow: 1;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+        padding: 5px;
+      }
+
+      .chat-input button {
+        margin-left: 10px;
+        background-color: #0084ff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 5px 10px;
+      }
+    </style>
+  </head>
+  <body class="p-3">
+    <h1 class="text-center">Agriculture-Bot</h1>
+    <div class="chat-container" id="chatbox"></div>
+    <div class="chat-input">
+      <input
+        id="userInput"
+        type="text"
+        name="message"
+        placeholder="Type your message here..."
+      />
+      <button id="submitButton" onclick="sendMessage()">Send</button>
+    </div>
+
+    <script>
+      document
+        .getElementById("userInput")
+        .addEventListener("keypress", function (event) {
+          if (event.key === "Enter") {
+            sendMessage();
+          }
+        });
+
+      async function sendMessage() {
+        const message = document.getElementById("userInput").value;
+        document.getElementById(
+          "chatbox"
+        ).innerHTML += `<div class="chat-message user"><strong>User:</strong> ${message}</div>`;
+        const response = await fetch("/send_message", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: `message=${encodeURIComponent(message)}`,
+        });
+        const data = await response.json();
+        document.getElementById(
+          "chatbox"
+        ).innerHTML += `<div class="chat-message assistant"><strong>Avatar:</strong> ${data.assistant}</div>`;
+        document.getElementById("userInput").value = "";
+        document.getElementById("chatbox").scrollTop =
+          document.getElementById("chatbox").scrollHeight;
+      }
+    </script>
+  </body>
+</html>

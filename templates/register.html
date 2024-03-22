@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+      }
+
+      .container {
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        width: 90%;
+        max-width: 400px;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+      }
+
+      label {
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+
+      input[type="text"],
+      input[type="date"],
+      input[type="password"],
+      input[type="submit"] {
+        padding: 10px;
+        margin-bottom: 15px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        font-size: 16px;
+      }
+
+      input[type="submit"] {
+        background-color: #007bff;
+        color: #fff;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      input[type="submit"]:hover {
+        background-color: #0056b3;
+      }
+
+      .or-divider {
+        margin: 15px 0;
+        text-align: center;
+        font-weight: bold;
+        font-size: 18px;
+        color: #666;
+      }
+
+      /* Style for Google sign-in button */
+      .google-signin-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #4285f4;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        font-size: 16px;
+        width: 100%;
+      }
+
+      .google-signin-button:hover {
+        background-color: #357ae8;
+      }
+
+      /* Style for Google icon */
+      .google-icon {
+        width: 24px;
+        height: 24px;
+        margin-right: 10px;
+      }
+      #signinTab form {
+        display: flex;
+        flex-direction: column;
+      }
+
+      #signinTab label {
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+
+      #signinTab input[type="text"],
+      #signinTab input[type="password"],
+      #signinTab input[type="submit"] {
+        padding: 10px;
+        margin-bottom: 15px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        font-size: 16px;
+      }
+
+      #signinTab input[type="submit"] {
+        background-color: #007bff;
+        color: #fff;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      #signinTab input[type="submit"]:hover {
+        background-color: #0056b3;
+      }
+      .tabs {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+      }
+
+      .tablinks {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        margin: 0 10px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      .tablinks:hover {
+        background-color: #0056b3;
+      }
+
+      @media (max-width: 500px) {
+        .container {
+          width: 100%;
+          padding: 10px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Include Firebase App and Authentication SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-auth-compat.js"></script>
+
+    <div class="container">
+      <div class="tabs">
+        <button class="tablinks" onclick="openTab(event, 'registerTab')">
+          Register
+        </button>
+        <button class="tablinks" onclick="openTab(event, 'signinTab')">
+          Sign In
+        </button>
+      </div>
+
+      <div id="registerTab" class="tabcontent" style="display: block">
+        <form action="/register" method="POST">
+          <label for="name">Name:</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            required
+            value="{{ name }}"
+          />
+
+          <label for="username">Username:</label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            required
+            value="{{ username }}"
+          />
+
+          <label for="dob">Date of Birth:</label>
+          <input type="date" id="dob" name="dob" required />
+
+          <label for="password">Password:</label>
+          <input type="password" id="password" name="password" required />
+
+          <input type="submit" value="Register" />
+        </form>
+        <div class="or-divider">OR</div>
+        <!-- Google sign-in button -->
+        <button class="google-signin-button" onclick="loginWithGoogle()">
+          <img
+            src="https://img.icons8.com/color/48/000000/google-logo.png"
+            class="google-icon"
+            alt="Google Icon"
+          />
+          Sign up with Google
+        </button>
+      </div>
+
+      <div id="signinTab" class="tabcontent" style="display: none">
+        <form action="/signin" method="POST">
+          <label for="username">Username:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="username"
+            name="username"
+            required
+          />
+          <label for="password">Password:</label>
+          <input
+            type="password"
+            class="form-control"
+            id="password"
+            name="password"
+            required
+          />
+          <input type="submit" value="Sign In" />
+        </form>
+      </div>
+    </div>
+
+    <!-- Google sign-in callback -->
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyAtG4I-txMf986iF-f8doWrCloJ4SI7zvc",
+        authDomain: "aftrai.firebaseapp.com",
+        projectId: "aftrai",
+        storageBucket: "aftrai.appspot.com",
+        messagingSenderId: "615295311899",
+        appId: "1:615295311899:web:4c3e9f65465e93e16a18be",
+        measurementId: "G-JBQV9R2VJM",
+      };
+      firebase.initializeApp(firebaseConfig);
+    </script>
+
+    <script>
+      function loginWithGoogle() {
+        var provider = new firebase.auth.GoogleAuthProvider();
+        firebase
+          .auth()
+          .signInWithPopup(provider)
+          .then((result) => {
+            // Handle successful sign-in
+            const user = result.user;
+            console.log("Signed in user:", user);
+          })
+          .catch((error) => {
+            // Handle sign-in errors
+            console.error("Sign-in error:", error);
+          });
+      }
+
+      function openTab(evt, tabName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+          tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+          tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(tabName).style.display = "block";
+        evt.currentTarget.className += " active";
+      }
+    </script>
+  </body>
+</html>

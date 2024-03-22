@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personality Detection Result</title>
+</head>
+<body>
+    <h1>crop Detection Result</h1>
+    {% for response in responses %}
+    <h2>Analysis for Image {{ response.image_number }}</h2>
+    <p>{{ response.response }}</p>
+    {% endfor %}
+</body>
+</html>

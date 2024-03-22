@@ -1,0 +1,12 @@
+Flask
+requests==2.26.0
+gunicorn==20.1.0
+flask_sqlalchemy
+openai
+google-generativeai
+python-dotenv==1.0.1
+firebase_admin
+SQLAlchemy==2.0.27
+Pillow
+psycopg2-binary==2.9.9
+

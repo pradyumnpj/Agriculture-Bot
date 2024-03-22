@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Set System Message</title>
+    <style>
+      body {
+          background-image: linear-gradient(to bottom, #e0e0e0, #f8f8f8); /* Light-grey gradient */
+          height: 100vh; /* Use full screen height */
+          margin: 0; /* Reset default margins */
+          display: flex;
+          align-items: center; 
+          justify-content: center;
+          font-family: 'Arial', sans-serif; /* Or another modern font */
+      }
+
+      .center { /* Optional: Keep or remove based on preference */
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%); 
+        text-align: center;
+      }
+
+      form {
+        display: inline-block;
+        width: 450px;  
+        padding: 40px; 
+        background-color: #fff;
+        border-radius: 15px;
+        box-shadow: 5px 8px 20px rgba(0, 0, 0, 0.2); 
+      }
+
+      label {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 16px;
+        font-weight: bold;
+        color: #333; 
+      }
+
+      input[type="text"] {
+        width: 100%;
+        padding: 12px; 
+        margin-bottom: 15px; 
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+        box-sizing: border-box;
+      }
+
+      input[type="submit"] {
+        background-color: #008CBA; /* Blue button */
+        color: white;
+        padding: 12px 20px; 
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px; 
+      }
+
+      input[type="submit"]:hover {
+        background-color: #006ba1; /* Darker blue on hover */
+      }
+    </style>
+</head>
+<body>
+    <div class="center"> 
+        <form action="/set_system_message" method="post">
+            <label for="system_message">System Message:</label>
+            <input type="text" id="system_message" name="system_message">
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+</body>
+</html>

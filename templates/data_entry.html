@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Data Entry</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+        #dataForm {
+            width: 400px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #fff;
+        }
+        #dataInput {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div id="dataEntryContainer">
+        <form id="dataForm">
+            <label for="dataInput">Enter System Message:</label>
+            <input type="text" id="dataInput" placeholder="Enter system message..." onkeypress="return event.keyCode != 13;">
+            <button type="submit" id="submitButton">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        $('#dataInput').on('keypress', function(e) {
+            if (e.which == 13) {
+                e.preventDefault();
+                $('#dataForm').submit();
+            }
+        });
+
+        $('#dataForm').on('submit', function(e) {
+            e.preventDefault();
+            var data = $('#dataInput').val();
+            $.ajax({
+                url: '/set_data',
+                data: JSON.stringify({ 'data': data }),
+                type: 'POST',
+                contentType: 'application/json',
+                success: function(response) {
+                    alert('System message set successfully!');
+                    window.location.href = "/";
+                }
+            });
+            $('#dataInput').val('');
+        });
+    </script>
+</body>
+</html>
